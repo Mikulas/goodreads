@@ -85,9 +85,8 @@ abstract class ApiClass
 		$url = $this->buildUrl($mref->getAnnotation('url'), $params);
 		$method = $mref->getAnnotation('method') ?: 'GET';
 
-		$response = $this->request($url, $method);
-
-		return $this->$nsMethod($response);
+		list($content, $meta) = $this->request($url, $method);
+		return $this->$nsMethod($content, (object) $meta);
 	}
 
 	/**
@@ -184,10 +183,11 @@ abstract class ApiClass
 
 	/**
 	 * @param string $url
-	 * @return
+	 * @return cURL\Response
 	 */
 	private function request($url, $method)
 	{
+		echo "$url\n";
 		$request = new Request($url);
 		$request->getOptions()
 			->set(CURLOPT_CUSTOMREQUEST, $method)
@@ -199,7 +199,7 @@ abstract class ApiClass
 			dump($error);
 		}
 
-		return $response->getContent();
+		return [$response->getContent(), $response->getInfo()];
 	}
 
 }
