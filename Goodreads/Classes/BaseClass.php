@@ -29,7 +29,7 @@ abstract class BaseClass extends ApiClass
 
 	/**
 	 * @param string $str xml
-	 * @return array
+	 * @return SimpleXMLElement
 	 */
 	protected function handleXml($str)
 	{
@@ -37,22 +37,7 @@ abstract class BaseClass extends ApiClass
 		if ($xml->getName() === 'error') {
 			throw new InvalidMethodCallException("API responded with: " . $xml);
 		}
-		return $this->nodeToArray($xml);
-	}
-
-	/**
-	 * @param SimpleXMLElement $xml
-	 * @return array
-	 */
-	private function nodeToArray(SimpleXMLElement $xml) {
-		$array = (array) $xml;
-
-		foreach (array_slice($array, 0) as $key => $value) {
-			if ($value instanceof SimpleXMLElement) {
-				$array[$key] = empty($value) ? NULL : $this->nodeToArray($value);
-			}
-		}
-		return $array;
+		return $xml;
 	}
 
 }
