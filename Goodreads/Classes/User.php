@@ -3,7 +3,7 @@
 namespace Goodreads\Classes;
 
 /**
- * @method mixed show($id)
+ * @method show(array $options)
  */
 class User extends BaseClass
 {
