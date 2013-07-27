@@ -24,5 +24,11 @@
             "type": "vcs",
             "url": "https://github.com/PetrP/Access"
         }
-    ]
+    ],
+    "autoload": {
+        "psr-0": {
+            "Goodreads\\": ""
+        }
+    }
+
 }
